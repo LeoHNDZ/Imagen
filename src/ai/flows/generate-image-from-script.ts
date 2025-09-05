@@ -25,13 +25,6 @@ export async function generateImageFromScript(input: GenerateImageFromScriptInpu
   return generateImageFromScriptFlow(input);
 }
 
-const generateImagePrompt = ai.definePrompt({
-  name: 'generateImagePrompt',
-  input: {schema: GenerateImageFromScriptInputSchema},
-  output: {schema: GenerateImageFromScriptOutputSchema},
-  prompt: `Generate an image based on the following script and style.\n\nScript: {{{script}}}\n\nStyle: {{{imageStyle}}}`,
-});
-
 const generateImageFromScriptFlow = ai.defineFlow(
   {
     name: 'generateImageFromScriptFlow',
@@ -41,11 +34,7 @@ const generateImageFromScriptFlow = ai.defineFlow(
   async input => {
     const {media} = await ai.generate({
       model: 'googleai/imagen-2',
-      prompt: [
-        {
-          text: `Generate an image based on the following script and style.\n\nScript: ${input.script}\n\nStyle: ${input.imageStyle}`,
-        },
-      ],
+      prompt: `Generate an image based on the following script and style.\n\nScript: ${input.script}\n\nStyle: ${input.imageStyle}`,
     });
 
     if (!media.url) {
