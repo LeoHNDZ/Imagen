@@ -41,7 +41,7 @@ const generateImageFromScriptFlow = ai.defineFlow(
   async input => {
     const {media} = await ai.generate({
       prompt: `${input.script} in the style of ${input.imageStyle}`,
-      model: 'googleai/imagen-4.0-fast-generate-001',
+      model: 'googleai/gemini-1.5-flash',
     });
 
     return {image: media.url!};
