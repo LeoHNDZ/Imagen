@@ -33,11 +33,11 @@ const generateImageFromScriptFlow = ai.defineFlow(
   },
   async input => {
     const {media} = await ai.generate({
-      model: 'googleai/imagen-2',
+      model: 'openai/dall-e-3',
       prompt: `Generate an image based on the following script and style.\n\nScript: ${input.script}\n\nStyle: ${input.imageStyle}`,
     });
 
-    if (!media.url) {
+    if (!media || !media.url) {
       throw new Error('Image generation failed to produce a URL.');
     }
 
