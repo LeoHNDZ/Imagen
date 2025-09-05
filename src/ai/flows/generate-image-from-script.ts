@@ -40,10 +40,18 @@ const generateImageFromScriptFlow = ai.defineFlow(
   },
   async input => {
     const {media} = await ai.generate({
-      prompt: `${input.script} in the style of ${input.imageStyle}`,
-      model: 'googleai/gemini-1.5-flash',
+      model: 'googleai/imagen-2',
+      prompt: [
+        {
+          text: `Generate an image based on the following script and style.\n\nScript: ${input.script}\n\nStyle: ${input.imageStyle}`,
+        },
+      ],
     });
 
-    return {image: media.url!};
+    if (!media.url) {
+      throw new Error('Image generation failed to produce a URL.');
+    }
+
+    return {image: media.url};
   }
 );
